@@ -12,13 +12,7 @@ function resolveFileWithoutExtension(filePath) {
   }
 }
 
-function resolve(targetUrl, source) {
-  var packageRoot = findParentDir.sync(source, 'node_modules');
-
-  if (!packageRoot) {
-    return null;
-  }
-
+function resolveModuleImport(packageRoot, targetUrl) {
   var filePath = path.resolve(packageRoot, 'node_modules', targetUrl);
 
   if (!path.extname(filePath)) {
@@ -32,8 +26,16 @@ function resolve(targetUrl, source) {
   if (fs.existsSync(path.dirname(filePath))) {
     return filePath;
   }
+}
 
-  return resolve(targetUrl, path.dirname(packageRoot));
+function resolve(targetUrl, source) {
+  var packageRoot = findParentDir.sync(source, 'node_modules');
+
+  if (!packageRoot) {
+    return null;
+  }
+  
+  return resolveModuleImport(packageRoot, targetUrl) || resolve(targetUrl, path.dirname(packageRoot));
 }
 
 module.exports = function importer (url, prev, done) {
