@@ -3,4 +3,4 @@ version: "2"
 plugins:
   duplication:
     exclude_patterns:
-    - "tests/"
+    - "index.test.js"
