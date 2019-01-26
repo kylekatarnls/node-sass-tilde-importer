@@ -27,7 +27,7 @@ var result = sass.renderSync({
 
 `node-sass` cli example:
 ```sh
-node-sass style.scss --importer=node_modules/node-sass-tilde-importer
+node-sass style.scss --importer=node_modules/@kylekatarnls/node-sass-tilde-importer
 ```
 
 Please refer to the node-sass [readme](https://github.com/sass/node-sass#readme) for full instruction on how to use custom importers.
