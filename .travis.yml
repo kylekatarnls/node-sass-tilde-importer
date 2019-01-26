@@ -9,10 +9,18 @@ node_js:
   - '6'
   - '4'
 
+env:
+  global:
+    - CC_TEST_REPORTER_ID=90cb5b097ceef6852983e1576ea181bfb2fbf07eb232f9651d073f90692850a0
+
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
 script:
   - npm test
   - codecov
 
-addons:
-  code_climate:
-    repo_token: 90cb5b097ceef6852983e1576ea181bfb2fbf07eb232f9651d073f90692850a0
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
